@@ -131,15 +131,15 @@ fh.variables['AMOC'].long_name 	= 'Atlantic Meridional Overturning Circulation'
 fh.variables['depth'].long_name = 'Depth'
 fh.variables['lat'].long_name 	= 'Array of latitudes'
 
-fh.variables['time'].units 		  = 'Year'
-fh.variables['AMOC'].units 		  = 'Sv'
+fh.variables['time'].units 		= 'Year'
+fh.variables['AMOC'].units 		= 'Sv'
 fh.variables['depth'].units 		= 'm'
-fh.variables['lat'].units 		  = 'degrees N'
+fh.variables['lat'].units 		= 'degrees N'
 
 #Writing data to correct variable	
-fh.variables['time'][:]     	  = time_year
-fh.variables['depth'][:] 		    = depth
-fh.variables['lat'][:] 			    = lat
-fh.variables['AMOC'][:] 		    = AMOC_all
+fh.variables['time'][:]     	  	= time_year
+fh.variables['depth'][:] 		= depth
+fh.variables['lat'][:] 			= lat
+fh.variables['AMOC'][:] 		= AMOC_all
 
 fh.close()
