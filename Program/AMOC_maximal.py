@@ -131,19 +131,19 @@ fh.createVariable('lat', float, ('lat'), zlib=True)
 fh.createVariable('depth', float, ('time', 'lat'), zlib=True)
 fh.createVariable('AMOC_max', float, ('time', 'lat'), zlib=True)
 
-fh.variables['AMOC_max'].long_name 	= 'maximum of Atlantic Meridional Overturning Circulation'
-fh.variables['depth'].long_name 	  = 'Depth of maximum AMOC'
-fh.variables['lat'].long_name 		  = 'Array of latitudes'
+fh.variables['AMOC_max'].long_name 		= 'maximum of Atlantic Meridional Overturning Circulation'
+fh.variables['depth'].long_name 	  	= 'Depth of maximum AMOC'
+fh.variables['lat'].long_name 		  	= 'Array of latitudes'
 
-fh.variables['time'].units 		      = 'Year'
-fh.variables['AMOC_max'].units 		  = 'Sv'
-fh.variables['depth'].units 		    = 'm'
-fh.variables['lat'].units 		      = 'degrees N'
+fh.variables['time'].units 		      	= 'Year'
+fh.variables['AMOC_max'].units 		 	= 'Sv'
+fh.variables['depth'].units 		    	= 'm'
+fh.variables['lat'].units 		     	= 'degrees N'
 
 #Writing data to correct variable	
-fh.variables['time'][:]     	  	  = time_year
+fh.variables['time'][:]     	  	  	= time_year
 fh.variables['depth'][:] 		        = depth_max
 fh.variables['lat'][:] 			        = lat
-fh.variables['AMOC_max'][:] 		    = AMOC_max
+fh.variables['AMOC_max'][:] 		    	= AMOC_max
 
 fh.close()
