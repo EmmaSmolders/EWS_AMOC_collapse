@@ -1,4 +1,4 @@
-#Program determines the MOV index
+#Program determines the MOV index at 60N
 
 from pylab import *
 import numpy
