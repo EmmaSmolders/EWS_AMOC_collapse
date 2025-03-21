@@ -36,8 +36,7 @@ import matplotlib.colors as mcolors
 import cartopy.mpl.ticker as cticker
 
 #Making pathway to folder with all data
-directory = r'/Users/6008399/Documents/PhD/CESM_collapse/netcdf/'
-directory_figures = r'/Users/6008399/Documents/PhD/CESM_collapse/Figures/'
+directory	= '../../../Data/AMOC/'
 
 #%% maximal AMOC strength under 500m
 
@@ -369,5 +368,4 @@ axs[1,2].set_ylim(-0.75,0.3)
 axs[1,2].grid()
 
 plt.tight_layout()
-plt.savefig(directory_figures +'AMOC_max_FOV_transient_branches_array_transects_including_E3.pdf')
 plt.show()
