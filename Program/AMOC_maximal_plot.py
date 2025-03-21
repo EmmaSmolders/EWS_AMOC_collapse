@@ -5,7 +5,7 @@ Created on Thu Mar  7 16:06:58 2024
 
 @author: 6008399
 
-Time series of AMOC maximum at certain latitude of CESM transient and branched simulations
+Time series of AMOC maximum at certain latitude of CESM transient and branched simulations (Figure 1 op paper)
 
 """
 
