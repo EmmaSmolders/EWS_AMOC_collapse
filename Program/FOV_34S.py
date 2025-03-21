@@ -1,4 +1,4 @@
-#Program determines the MOV index
+#Program determines the MOV index at 34S
 
 from pylab import *
 import numpy
