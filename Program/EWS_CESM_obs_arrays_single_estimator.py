@@ -37,7 +37,7 @@ import matplotlib.colors as mcolors
 import cartopy.mpl.ticker as cticker
 
 #Making pathway to folder with all data
-directory = r'/Users/6008399/Documents/PhD/Cesm_collapse/netcdf/'
+directory	= '../../../Data/EWS/'
 directory_figures = r'/Users/6008399/Documents/PhD/Cesm_collapse/Figures/'
 
 #%% Ratio of variance using single estimator
@@ -130,47 +130,28 @@ for i in range(len(depth_samba)):
             continue
 
 #%% Ratio of AC1 using single estimator
-ac_salt_NO_samba     = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_SALT_month_1-12_SAMBA_noACrestriction.nc','r')
 ac_salt_samba     = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_SALT_month_1-12_34S_branch_1500_600.nc','r')
-
 ac_salt_2_samba   = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_SALT_month_1-12_34S_branch_1650_1500.nc','r')
 ac_salt_3_samba   = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_SALT_month_1-12_34S_branch_1650_600.nc','r')
-ac_salt_test_samba   = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_SALT_month_1-12_34S_branch_1500_600test.nc','r')
-
-ac_salt_jan_samba = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_SALT_34S_monthly_January.nc','r')
-ac_salt_jun_samba = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_SALT_34S_monthly_June.nc','r')
 
 ac_temp_samba     = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_TEMP_month_1-12_34S_branch_1500_600.nc','r')
 ac_temp_2_samba   = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_TEMP_month_1-12_34S_branch_1650_1500.nc','r')
 ac_temp_3_samba   = netcdf.Dataset(directory + 'Atlantic_single_estimator_AC1_TEMP_month_1-12_34S_branch_1650_600.nc','r')
-       
-lon_month_samba   = ac_salt_jan_samba.variables['lon'][:]
 
 ratio_ac_salt_samba       = ac_salt_samba.variables['RATIO_AC1_SALT'][:]
-ratio_ac_salt_NO_samba       = ac_salt_NO_samba.variables['RATIO_AC1_SALT'][:]
 ratio_ac_salt_2_samba     = ac_salt_2_samba.variables['RATIO_AC1_SALT'][:]
 ratio_ac_salt_3_samba     = ac_salt_3_samba.variables['RATIO_AC1_SALT'][:]
-ratio_ac_salt_test_samba     = ac_salt_test_samba.variables['RATIO_AC1_SALT'][:]
-ratio_ac_salt_jan_samba   = ac_salt_jan_samba.variables['RATIO_AC1_SALT'][:]
-ratio_ac_salt_jun_samba   = ac_salt_jun_samba.variables['RATIO_AC1_SALT'][:]
 
 ratio_ac_temp_samba       = ac_temp_samba.variables['RATIO_AC1_TEMP'][:]
 ratio_ac_temp_2_samba     = ac_temp_2_samba.variables['RATIO_AC1_TEMP'][:]
 ratio_ac_temp_3_samba     = ac_temp_3_samba.variables['RATIO_AC1_TEMP'][:]
 
 sig_ac_salt_pos_samba     = ac_salt_samba.variables['SIG_RATIO_AC1_SALT_pos'][:]
-sig_ac_salt_pos_NO_samba     = ac_salt_NO_samba.variables['SIG_RATIO_AC1_SALT_pos'][:]
 sig_ac_salt_pos_2_samba   = ac_salt_2_samba.variables['SIG_RATIO_AC1_SALT_pos'][:]
 sig_ac_salt_pos_3_samba   = ac_salt_3_samba.variables['SIG_RATIO_AC1_SALT_pos'][:]
-sig_ac_salt_pos_test_samba   = ac_salt_test_samba.variables['SIG_RATIO_AC1_SALT_pos'][:]
-sig_ac_salt_pos_jan_samba = ac_salt_jan_samba.variables['SIG_RATIO_AC1_SALT_pos'][:]
-sig_ac_salt_pos_jun_samba = ac_salt_jun_samba.variables['SIG_RATIO_AC1_SALT_pos'][:]
 sig_ac_salt_neg_samba     = ac_salt_samba.variables['SIG_RATIO_AC1_SALT_neg'][:]
-sig_ac_salt_neg_NO_samba     = ac_salt_NO_samba.variables['SIG_RATIO_AC1_SALT_neg'][:]
 sig_ac_salt_neg_2_samba   = ac_salt_2_samba.variables['SIG_RATIO_AC1_SALT_neg'][:]
 sig_ac_salt_neg_3_samba   = ac_salt_3_samba.variables['SIG_RATIO_AC1_SALT_neg'][:]
-sig_ac_salt_neg_jan_samba = ac_salt_jan_samba.variables['SIG_RATIO_AC1_SALT_neg'][:]
-sig_ac_salt_neg_jun_samba = ac_salt_jun_samba.variables['SIG_RATIO_AC1_SALT_neg'][:]
 
 sig_ac_temp_pos_samba     = ac_temp_samba.variables['SIG_RATIO_AC1_TEMP_pos'][:]
 sig_ac_temp_pos_2_samba   = ac_temp_2_samba.variables['SIG_RATIO_AC1_TEMP_pos'][:]
