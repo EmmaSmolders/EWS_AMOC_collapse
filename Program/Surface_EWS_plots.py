@@ -7,6 +7,8 @@ Created on Thu Sep 26 19:25:13 2024
 
 Surface plots of significant regions of the single estimator ratio of EWS of the QE simulation 
 
+Figure 3 of paper, and Figures S6-S8
+
 """
 
 from pylab import *
