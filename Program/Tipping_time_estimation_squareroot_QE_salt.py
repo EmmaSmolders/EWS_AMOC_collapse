@@ -5,7 +5,7 @@ Created on Tue Oct  8 12:39:23 2024
 
 @author: 6008399
 
-Changepoint analysis for QE using all gridpoints 
+Changepoint analysis for QE using all gridpoints (square-root relation lambda - time)
 
 """
 
@@ -40,7 +40,7 @@ from scipy.io import loadmat
 from statsmodels.graphics.gofplots import qqplot
 
 #Making pathway to folder with all data
-directory = r'/Users/6008399/Documents/PhD/Cesm_collapse/netcdf/'
+directory = r'/../../Data/RES/'
 directory_figures = r'/Users/6008399/Documents/PhD/Cesm_collapse/Figures/'
 
 
