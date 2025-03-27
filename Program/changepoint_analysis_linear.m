@@ -3,7 +3,7 @@ close all
 clc
 
 %Read in data
-directory = '/Users/6008399/Documents/PhD/CESM_collapse/netcdf/';
+directory = '/../../Data/RES/';
 
 %Restoring rate data from Snellius stored in netcdfs
 lon = ncread('/Users/6008399/Documents/PhD/CESM_collapse/netcdf/lambda_TEMP_transient_1500_endtimes_1700_1702_spacing_2_window_70_SAMBA_all_gridpoints.nc','lon');
