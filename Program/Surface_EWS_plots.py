@@ -7,8 +7,6 @@ Created on Thu Sep 26 19:25:13 2024
 
 Surface plots of significant regions of the single estimator ratio of EWS of the QE simulation 
 
-Figure 3 of paper, and Figures S6-S8
-
 """
 
 from pylab import *
@@ -38,10 +36,8 @@ import matplotlib.colors as mcolors
 import cartopy.mpl.ticker as cticker
 
 #Making pathway to folder with all data
-directory = r'/Users/6008399/Documents/PhD/Cesm_collapse/netcdf/'
+directory = r'/Users/6008399/Documents/PhD/Cesm_collapse/Data_final/'
 directory_figures = r'/Users/6008399/Documents/PhD/Cesm_collapse/Figures/'
-
-#%% Read in data (window 70)
 
 #%% Restoring rate
 
@@ -82,6 +78,37 @@ sig_lambda_salt_neg9  = lambda_salt9.variables['SIG_RATIO_LAMBDA_SALT_neg'][55:5
 
 ratio_lambda_salt = np.ma.concatenate((ratio_lambda_salt1, ratio_lambda_salt2, ratio_lambda_salt3, ratio_lambda_salt4, ratio_lambda_salt5, ratio_lambda_salt6, ratio_lambda_salt7, ratio_lambda_salt8, ratio_lambda_salt9))
 sig_lambda_salt_neg = np.ma.concatenate((sig_lambda_salt_neg1, sig_lambda_salt_neg2, sig_lambda_salt_neg3, sig_lambda_salt_neg4, sig_lambda_salt_neg5, sig_lambda_salt_neg6, sig_lambda_salt_neg7, sig_lambda_salt_neg8, sig_lambda_salt_neg9))
+
+
+# Create a new NetCDF file
+new_file = netcdf.Dataset(directory + 'Atlantic_single_estimator_LAMBDA1_SALT_month_1-12_depthlevels_branch_1500_600.nc', 'w', format='NETCDF4')
+
+# Define dimensions
+new_file.createDimension('depth', len(depth))
+new_file.createDimension('depth_levels', len(ratio_lambda_salt[:,0,0]))
+new_file.createDimension('lat', len(lat))
+new_file.createDimension('lon', len(lon[0]))
+
+# Create variables
+depth_var = new_file.createVariable('depth', 'f4', ('depth',))
+lat_var = new_file.createVariable('lat', 'f4', ('lat', 'lon'))
+lon_var = new_file.createVariable('lon', 'f4', ('lat','lon'))
+ratio_lambda_salt_var = new_file.createVariable('RATIO_LAMBDA_SALT', 'f4', ('depth_levels', 'lat', 'lon'))
+sig_lambda_salt_neg_var = new_file.createVariable('SIG_RATIO_LAMBDA_SALT_neg', 'f4', ('depth_levels', 'lat', 'lon'))
+
+# Write data to variables
+depth_var[:] = depth
+lat_var[:] = lat
+lon_var[:] = lon
+ratio_lambda_salt_var[:, :, :] = ratio_lambda_salt
+sig_lambda_salt_neg_var[:, :, :] = sig_lambda_salt_neg
+
+# Close the new file
+new_file.close()
+
+# Close the original file
+lambda_salt1.close()
+
 
 #Salinity (E3/E1)
 lambda_salt1_E3_E1 = netcdf.Dataset(directory + 'Atlantic_single_estimator_LAMBDA_SALT_month_1-12_surface_branch_1650_600_depth_5m.nc','r')
@@ -185,9 +212,15 @@ sig_lambda_temp_neg9_E3_E1  = lambda_temp9_E3_E1.variables['SIG_RATIO_LAMBDA_TEM
 ratio_lambda_temp_E3_E1 = np.ma.concatenate((ratio_lambda_temp1_E3_E1, ratio_lambda_temp2_E3_E1, ratio_lambda_temp3_E3_E1, ratio_lambda_temp4_E3_E1, ratio_lambda_temp5_E3_E1, ratio_lambda_temp6_E3_E1, ratio_lambda_temp7_E3_E1, ratio_lambda_temp8_E3_E1, ratio_lambda_temp9_E3_E1))
 sig_lambda_temp_neg_E3_E1 = np.ma.concatenate((sig_lambda_temp_neg1_E3_E1, sig_lambda_temp_neg2_E3_E1, sig_lambda_temp_neg3_E3_E1, sig_lambda_temp_neg4_E3_E1, sig_lambda_temp_neg5_E3_E1, sig_lambda_temp_neg6_E3_E1, sig_lambda_temp_neg7_E3_E1, sig_lambda_temp_neg8_E3_E1, sig_lambda_temp_neg9_E3_E1))
 
+#%%
+
+test = lambda_salt = netcdf.Dataset(directory + 'Atlantic_single_estimator_LAMBDA1_SALT_month_1-12_depthlevels_branch_1500_600.nc', 'r')
+sig_lambda_salt_neg = test.variables['SIG_RATIO_LAMBDA_SALT_neg'][:]
+
 
 #%% Plot (Figure 3 of paper)
 
+depth_idx_1 = [0, 10, 20, 30, 36, 40, 45, 49, 55]
 depth_idx = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 fig, axs = plt.subplots(3,3,subplot_kw={'projection': ccrs.PlateCarree()}, figsize=(6,10.5))
@@ -200,7 +233,7 @@ for i, depth_i in enumerate(depth_idx):
     print(depth_i)
     print(i)
 
-    data_EWS = sig_lambda_salt_neg_E3_E1[depth_i,:,:]
+    data_EWS = sig_lambda_salt_neg[depth_i,:,:]
     
     print(data_EWS.count()/np.size(sig_lambda_temp_neg[0,:,:]))
     
@@ -433,11 +466,11 @@ plt.savefig(directory_figures + 'Atlantic_DIFF_LAMBDA_regions_window_70_sig_095_
 
 lambda_temp1_E3_E2 = netcdf.Dataset(directory + 'Atlantic_single_estimator_LAMBDA_TEMP_month_1-12_surface_branch_1650_1500_depth_5m.nc','r')
 lambda_temp3_E3_E2 = netcdf.Dataset(directory + 'Atlantic_single_estimator_LAMBDA_TEMP_month_1-12_surface_branch_1650_1500_depth_209m.nc','r')
-lambda_temp6_E3_E2 = netcdf.Dataset(directory + 'Atlantic_single_estimator_LAMBDA_TEMP_month_1-12_surface_branch_1650_1500_depth_1106m.nc','r')
+lambda_temp6_E3_E2 = netcdf.Dataset(directory + 'Atlantic_single_estimator_LAMBDA_TEMP_month_1-12_surface_branch_1650_1500_depth_1968m.nc','r')
 
 sig_lambda_temp_neg1_E3_E2  = lambda_temp1_E3_E2.variables['SIG_RATIO_LAMBDA_TEMP_neg'][0:1,:,:]
 sig_lambda_temp_neg3_E3_E2  = lambda_temp3_E3_E2.variables['SIG_RATIO_LAMBDA_TEMP_neg'][20:21,:,:]
-sig_lambda_temp_neg6_E3_E2  = lambda_temp6_E3_E2.variables['SIG_RATIO_LAMBDA_TEMP_neg'][40:41,:,:]
+sig_lambda_temp_neg7_E3_E2  = lambda_temp6_E3_E2.variables['SIG_RATIO_LAMBDA_TEMP_neg'][45:46,:,:]
 
 fig, axs = plt.subplots(3,3,subplot_kw={'projection': ccrs.PlateCarree()}, figsize=(6,10.5))
 
@@ -549,12 +582,12 @@ axs[1,2].set_yticks(np.arange(-90,91,30), crs=ccrs.PlateCarree())
 lat_formatter = cticker.LatitudeFormatter()
 axs[1,2].yaxis.set_major_formatter(lat_formatter)
 
-axs[2,0].contourf(lon, lat, sig_lambda_temp_neg6[0,:,:], transform=ccrs.PlateCarree(), colors=['blue'])#, levels=np.linspace(0,1,2))
+axs[2,0].contourf(lon, lat, sig_lambda_temp_neg7[0,:,:], transform=ccrs.PlateCarree(), colors=['blue'])#, levels=np.linspace(0,1,2))
 axs[2,0].axhline(y=60, color='r', linestyle='--', linewidth=0.7)
 axs[2,0].axhline(y=26, color='r', linestyle='--', linewidth=0.7)
 axs[2,0].axhline(y=-34.5, color='r', linestyle='--', linewidth=0.7)
     
-axs[2,0].set_title('E2/E1 (1106m)')
+axs[2,0].set_title('E2/E1 (1967m)')
 axs[2,0].coastlines()
 axs[2,0].set_xlim([-80,20])
     
@@ -567,12 +600,12 @@ axs[2,0].set_yticks(np.arange(-90,91,30), crs=ccrs.PlateCarree())
 lat_formatter = cticker.LatitudeFormatter()
 axs[2,0].yaxis.set_major_formatter(lat_formatter)
 
-axs[2,1].contourf(lon, lat, sig_lambda_temp_neg6_E3_E1[0,:,:], transform=ccrs.PlateCarree(), colors=['blue'])#, levels=np.linspace(0,1,2))
+axs[2,1].contourf(lon, lat, sig_lambda_temp_neg7_E3_E1[0,:,:], transform=ccrs.PlateCarree(), colors=['blue'])#, levels=np.linspace(0,1,2))
 axs[2,1].axhline(y=60, color='r', linestyle='--', linewidth=0.7)
 axs[2,1].axhline(y=26, color='r', linestyle='--', linewidth=0.7)
 axs[2,1].axhline(y=-34.5, color='r', linestyle='--', linewidth=0.7)
     
-axs[2,1].set_title('E3/E1 (1106m)')
+axs[2,1].set_title('E3/E1 (1967m)')
 axs[2,1].coastlines()
 axs[2,1].set_xlim([-80,20])
     
@@ -585,12 +618,12 @@ axs[2,1].set_yticks(np.arange(-90,91,30), crs=ccrs.PlateCarree())
 lat_formatter = cticker.LatitudeFormatter()
 axs[2,1].yaxis.set_major_formatter(lat_formatter)
 
-axs[2,2].contourf(lon, lat, sig_lambda_temp_neg6_E3_E2[0,:,:], transform=ccrs.PlateCarree(), colors=['blue'])#, levels=np.linspace(0,1,2))
+axs[2,2].contourf(lon, lat, sig_lambda_temp_neg7_E3_E2[0,:,:], transform=ccrs.PlateCarree(), colors=['blue'])#, levels=np.linspace(0,1,2))
 axs[2,2].axhline(y=60, color='r', linestyle='--', linewidth=0.7)
 axs[2,2].axhline(y=26, color='r', linestyle='--', linewidth=0.7)
 axs[2,2].axhline(y=-34.5, color='r', linestyle='--', linewidth=0.7)
     
-axs[2,2].set_title('E3/E2 (1106m)')
+axs[2,2].set_title('E3/E2 (1967m)')
 axs[2,2].coastlines()
 axs[2,2].set_xlim([-80,20])
     
