@@ -43,54 +43,6 @@ from statsmodels.graphics.gofplots import qqplot
 directory = r'/Users/6008399/Documents/PhD/Cesm_collapse/netcdf/'
 directory_figures = r'/Users/6008399/Documents/PhD/Cesm_collapse/Figures/'
 
-#%% Functions
-
-def Fourrier_surrogates(data, num_surr):
-    """Takes the fourier transorm of the time series and re-shuffles the statistics"""
-    data_fourier        = np.fft.rfft(data)
-    random_phases       = np.exp(np.random.uniform(0, 2 * np.pi, (num_surr, len(data) // 2 + 1)) * 1.0j)
-    data_fourier_new    = data_fourier * random_phases
-    data_new            = np.real(np.fft.irfft(data_fourier_new, n=len(data)))
-
-    return data_new
-
-#CHANGE THIS FUNCTION, YOU'RE NOT DOING A KENDALL TAU TEST ANYMORE BUT JUST A LINEAR FIT
-def Kendall_tau_test(data, num_surr, time_data = False):
-	"""Conducts the Kendall-Fourier test (adapted from Boers 2021)"""
-
-	#Remove masked elements (if present)
-	mask_index  = np.where(data.mask == False)[0]
-	data	    = data[mask_index]
-
-	if type(time_data) == type(False):
-		#No time array is provided, use dummy variable
-		trend, base = stats.linregress(np.arange(len(data)),data)[0], stats.linregress(np.arange(len(data)),data)[1]
-	else:
-		#Time array is provided, use these to fit the trends
-		time_data	= time_data[mask_index]
-		linreg_result = stats.linregress(time_data, data)
-		trend = linreg_result.slope
-		base = linreg_result.intercept
-		r_value = linreg_result.rvalue
-		p = 0
-#		trend, base 	= stats.linregress(time_data,data)[0], stats.linregress(time_data,data)[1]	
-
-	#Make time mean zero and create surrogate data
-	#data_0      = data - np.mean(data)
-	#data_surr   = Fourrier_surrogates(data_0, num_surr)
-
-	#Determine the linear regression of the surrogate time series
-	#stat_surr   = np.zeros(num_surr)
-
-	#for surr_i in range(num_surr):
-		#Determine the linear regression
-	#	stat_surr[surr_i] = stats.linregress(np.arange(len(data)), data_surr[surr_i])[0]
-
-	#Determine the significant level w.r.t. trend
-	#p = 1 - stats.percentileofscore(stat_surr, trend) / 100.
-
-	return p, trend, base, r_value
-
 #%% Read in data 
 
 #dz and dx of grid points along SAMBA
