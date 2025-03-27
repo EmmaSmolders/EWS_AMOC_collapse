@@ -30,19 +30,6 @@ figure
 contourf(lon, depth, squeeze(data(:,:,36))')
 colorbar
 
-%Retrieve significant grid indices from single estimator
-sig_regions = ncread('/Users/6008399/Documents/PhD/CESM_collapse/netcdf/Atlantic_single_estimator_LAMBDA_SALT_month_1-12_34S.nc', 'SIG_RATIO_LAMBDA_SALT_neg');
-sig_regions(abs(sig_regions) > threshold) = NaN;
-slice = squeeze(sig_regions(:,:));
-isNotNan = ~isnan(slice);
-[lonIndices, depthIndices] = find(isNotNan);
-
-%Check if length of depth and lon array is equal to amount of significant
-%gridpoints
-if length(depthIndices) ~= sum(~isnan(sig_regions(:))) 
-    disp('Length is not equal to significant regions')
-end
-
 %Change shape to (time, depth, lon)
 data = permute(data, [3, 2, 1]);
 window = 70; %Sliding window which is used for calculating the restoring rate on Snellius
@@ -102,9 +89,9 @@ for year_i = 1:length(CPend)
                 time_plot = time_point(change_point:end);
                 p = polyfit(time_plot, data_plot, 1);
 
-                % If positive trend -> infinite tipping time (i.e. 10e6)
+                % If positive trend -> infinite tipping time (i.e. 10e10)
                 if p(1) > 0
-                    time_at_zero_all_start(cp_i, year_i, depth_i, lon_i) = 10e6;
+                    time_at_zero_all_start(cp_i, year_i, depth_i, lon_i) = 10e10;
                     change_point_time_all_start(cp_i, year_i, depth_i, lon_i) = time_point(change_point);
                     trend_all_start(cp_i, year_i, depth_i, lon_i) = p(1);
                     base_all_start(cp_i, year_i, depth_i, lon_i) = p(2);
@@ -113,13 +100,9 @@ for year_i = 1:length(CPend)
                     continue
                 end
 
-                % Calculate the r-value and save only if r > 0.7
+                % Calculate the r-value
                 r_matrix = corrcoef(time_plot, data_plot);
                 r_value = r_matrix(1, 2);
-
-                %if r_value < 0.7
-                %    continue
-                %end
 
                 time_zero = -p(2) / p(1); % Solving y = p(1)*x + p(2) = 0
                 %time_zero cannot be smaller than starting year of input
