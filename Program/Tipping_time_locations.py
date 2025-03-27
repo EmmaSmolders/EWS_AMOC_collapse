@@ -36,7 +36,7 @@ import matplotlib.colors as mcolors
 import cartopy.mpl.ticker as cticker
 
 #Making pathway to folder with all data
-directory = r'/Users/6008399/Documents/PhD/Cesm_collapse/netcdf/'
+directory = r'/../../Data/EWS/'
 directory_figures = r'/Users/6008399/Documents/PhD/Cesm_collapse/Figures/'
 
 #%% Ratio of variance using single estimator (E3/E1)
@@ -155,7 +155,7 @@ cmap = colors.ListedColormap(['white'])
 
 fig, axs = plt.subplots(1, 2, figsize=(14, 6))
 axs[0].contourf(lon, depth, ratio_var_salt, cmap=cmap)
-axs[0].contourf(lon, depth, time_zero[0,0,:,:], cmap='seismic', extend='both', levels=np.linspace(1600,9000000,3))
+axs[0].contourf(lon, depth, time_zero[0,0,:,:], cmap='seismic', levels=np.linspace(1600,15000000,3))
 axs[0].contourf(lon, depth, sig_lambda_salt_neg, colors='none', linewidth=1.0, hatches='xx')
 axs[0].set_ylabel('Depth [m]', fontsize = 14)
 #axs[0,0].set_xlabel('Longitude $^\circ$E', fontsize = 12)
@@ -169,7 +169,7 @@ axs[0].set_facecolor('lightgrey')
 axs[0].grid()
 
 axs[1].contourf(lon, depth, ratio_var_salt, cmap=cmap)
-CS = axs[1].contourf(lon, depth, time_zero[0,-1,:,:], cmap='seismic', extend='both', levels=np.linspace(1600,9000000,3))
+CS = axs[1].contourf(lon, depth, time_zero[0,-1,:,:], cmap='seismic', levels=np.linspace(1600,15000000,3))
 axs[1].contourf(lon, depth, sig_lambda_salt_neg, colors='none', linewidth=1.0, hatches='xx')
 #axs[1].set_ylabel('Depth [m]', fontsize = 14)
 #axs[0,0].set_xlabel('Longitude $^\circ$E', fontsize = 12)
@@ -194,7 +194,7 @@ cmap = colors.ListedColormap(['white'])
 
 fig, axs = plt.subplots(1, 2, figsize=(14, 6))
 axs[0].contourf(lon, depth, ratio_var_temp, cmap=cmap)
-axs[0].contourf(lon, depth, time_zero_temp[0,0,:,:], cmap='seismic', extend='both', levels=np.linspace(1600, 9000000,3))
+axs[0].contourf(lon, depth, time_zero_temp[0,0,:,:], cmap='seismic', levels=np.linspace(1600,15000000,3))
 axs[0].contourf(lon, depth, sig_lambda_temp_neg, colors='none', linewidth=1.0, hatches='xx')
 axs[0].set_ylabel('Depth [m]', fontsize = 14)
 #axs[0,0].set_xlabel('Longitude $^\circ$E', fontsize = 12)
@@ -208,7 +208,7 @@ axs[0].set_facecolor('lightgrey')
 axs[0].grid()
 
 axs[1].contourf(lon, depth, ratio_var_temp, cmap=cmap)
-CS = axs[1].contourf(lon, depth, time_zero_temp[0,-1,:,:], cmap='seismic', extend='both', levels=np.linspace(1600,9000000,3))
+CS = axs[1].contourf(lon, depth, time_zero_temp[0,-1,:,:], levels=np.linspace(1600,15000000,3))
 axs[1].contourf(lon, depth, sig_lambda_temp_neg, colors='none', linewidth=1.0, hatches='xx')
 #axs[1].set_ylabel('Depth [m]', fontsize = 14)
 #axs[0,0].set_xlabel('Longitude $^\circ$E', fontsize = 12)
