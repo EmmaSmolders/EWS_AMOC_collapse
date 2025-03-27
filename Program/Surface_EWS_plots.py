@@ -36,8 +36,7 @@ import matplotlib.colors as mcolors
 import cartopy.mpl.ticker as cticker
 
 #Making pathway to folder with all data
-directory = r'/Users/6008399/Documents/PhD/Cesm_collapse/Data_final/'
-directory_figures = r'/Users/6008399/Documents/PhD/Cesm_collapse/Figures/'
+directory	= '../../../Data/EWS/'
 
 #%% Restoring rate
 
