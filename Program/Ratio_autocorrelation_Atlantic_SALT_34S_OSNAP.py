@@ -59,12 +59,12 @@ month_end	= 12
 num_surr 	= 2000
 
 #FILL HERE IN WHICH BRANCHES YOU WANT TO USE (E1 = 600, E2 = 1500, E3 = 1650)
-branch1 = 1500
-branch2 = 1650
+branch1 = 600
+branch2 = 1500
 
 #CHOOSE TRANSECT (OSNAP OR SAMBA)
-transect = 'OSNAP'
-#transect = '34S'
+#transect = 'OSNAP'
+transect = '34S'
 
 print(branch1)
 print(branch2)
@@ -156,20 +156,18 @@ for depth_i in range(len(depth)):
 		
 		#No AC restriction
 		ratio_ac_salt[depth_i, lon_i] = autocorr_salt2[depth_i, lon_i]/autocorr_salt1[depth_i, lon_i]
-		
-		if ratio_ac_salt[depth_i, lon_i] >= 1:
 			
-			#Generate Fourier surrogates of linearly detrended salinity time series to determine surrogate ratios
-			data1[:, :] = Fourrier_surrogates(TrendRemover(time1, salt1[:, depth_i, lon_i]), num_surr) #shape (num_surr, time)
-			data2[:, :] = Fourrier_surrogates(TrendRemover(time2, salt2[:, depth_i, lon_i]), num_surr)
+		#Generate Fourier surrogates of linearly detrended salinity time series to determine surrogate ratios
+		data1[:, :] = Fourrier_surrogates(TrendRemover(time1, salt1[:, depth_i, lon_i]), num_surr) #shape (num_surr, time)
+		data2[:, :] = Fourrier_surrogates(TrendRemover(time2, salt2[:, depth_i, lon_i]), num_surr)
 
-			#Lag-1 autocorrelation
-			for i in range(num_surr):
-				ac_salt1[i, depth_i, lon_i] = sm.tsa.acf(data1[i, :])[1] #shape (num_surr, depth, lon)
-				ac_salt2[i, depth_i, lon_i] = sm.tsa.acf(data2[i, :])[1]
+		#Lag-1 autocorrelation
+		for i in range(num_surr):
+			ac_salt1[i, depth_i, lon_i] = sm.tsa.acf(data1[i, :])[1] #shape (num_surr, depth, lon)
+			ac_salt2[i, depth_i, lon_i] = sm.tsa.acf(data2[i, :])[1]
 
-				#Single estimator, surrogate ratio's
-				ratio_ac_salt_surr[i, depth_i, lon_i] = ac_salt2[i, depth_i, lon_i]/ac_salt1[i, depth_i, lon_i]
+			#Single estimator, surrogate ratio's
+			ratio_ac_salt_surr[i, depth_i, lon_i] = ac_salt2[i, depth_i, lon_i]/ac_salt1[i, depth_i, lon_i]
 			
 		#Reject null-hypothesis if probability R>1 is larger than 0.95 (i.e. when less than 5% of the AC distributions overlaps)
 		sig_ratio_ac_salt1 = ma.masked_where(ratio_ac_salt_surr[:,depth_i,lon_i] <= 1, ratio_ac_salt_surr[:,depth_i,lon_i])
