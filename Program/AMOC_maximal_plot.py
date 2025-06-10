@@ -40,6 +40,10 @@ directory	= '../../../Data/AMOC/'
 
 #%% maximal AMOC strength under 500m
 
+lat_idx_samba = 0
+lat_idx_rapid = 190
+lat_idx_60N   = 253
+
 fh_transient = netcdf.Dataset(directory + 'AMOC_max_year_0-2200.nc','r')
 fh_branch1   = netcdf.Dataset(directory + 'AMOC_max_year_600-1200_branch_600.nc','r')
 fh_branch2   = netcdf.Dataset(directory + 'AMOC_max_year_1500-2100_branch_1500.nc','r')
