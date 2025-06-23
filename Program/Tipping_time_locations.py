@@ -34,6 +34,7 @@ import xarray as xr
 import xesmf as xe
 import matplotlib.colors as mcolors
 import cartopy.mpl.ticker as cticker
+from scipy.io import loadmat
 
 #Making pathway to folder with all data
 directory = r'/../../Data/EWS/'
